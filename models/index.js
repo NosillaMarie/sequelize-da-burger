@@ -14,7 +14,7 @@ var db = {};
 if (config.use_env_variable) {
     var sequelize = new Sequelize(process.env[config.use_env_variable]);
 } else {
-    var sequalize = new Sequelize(config.database, config.username, config.password, config);
+    var sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
 
 fs.readdirSync(__dirname).filter(function (file) {
@@ -31,7 +31,7 @@ Object.keys(db).forEach(function (modelName) {
     }
 });
 
-db.sequelize = sequalize;
+db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
 module.exports = db;

@@ -16,9 +16,7 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.BOOLEAN,
             allowNull: false,
             defaultValue: false
-        },
-        createdAt: sequelize.DATE,
-        updatedAt: sequelize.DATE,
+        }
     });
     return Burger;
 };
