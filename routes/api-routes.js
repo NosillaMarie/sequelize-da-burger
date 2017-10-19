@@ -1,59 +1,46 @@
 var db = require("../models");
-var request = require("request");
+
 
 module.exports = function (app) {
 
     app.get('/', function (req, res) {
         db.Burger.findAll({
 
-        }).then(function (data) {
-            res.render('index', {
-                burgers: data
-            });
+        }).then(function (dbBurger) {
+            var hbsObject = {
+                burgers: dbBurger
+            };
+            res.render('index', hbsObject);
         });
     });
 
-
-    //    app.get("/api/burger", function (req, res) {
-    //        db.Burger.findAll({}).then(function (burgers) {
-    //
-    //        });
-    //
-    //
-    //        app.post("/", function (req, res) {
-    //            console.log(req.body);
-    //            db.Burger.create({
-    //                    burger_name: req.body.burger_name,
-    //                    devoured: req.body.devoured
-    //
-    //                })
-    //                .then(function (burgers) {
-    //                    res.redirect("/");
-    //                })
-    //                .catch(function (err) {
-    //                    res.json(err);
-    //                });
-    //        });
-
-    app.post('/api/burger', function (req, res) {
+    app.post("/", function (req, res) {
+        //        console.log(req.body);
         db.Burger.create({
-            burger_name: req.body.burger_name
-        }).then(function (result) {
-            res.json(result);
-        })
+                burger_name: req.body.burger_name,
+                devoured: req.body.devoured
+
+            })
+            .then(function (dbBurger) {
+                res.redirect("/");
+            })
+            .catch(function (err) {
+                res.json(err);
+            });
     });
 
     app.put("/:id", function (req, res) {
         var id = req.params.id;
+        //        console.log(req.body);
 
-        db.Burger.update(req.body, {
+        db.Burger.update({
                 devoured: req.body.devoured
             }, {
                 where: {
-                    id: req.body.id
+                    id: req.params.id
                 }
             })
-            .then(function (burgers) {
+            .then(function (dbBurger) {
                 res.redirect("/");
             })
             .catch(function (err) {
